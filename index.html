@@ -1,56 +1,120 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>Video</title>
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <title>My Love ❤️</title>
 
-    html, body {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: black;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    video {
-        width: 100vw;
-        height: 100vh;
-        object-fit: contain;
-        background: black;
-    }
-</style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        video {
+            width: 100vw;
+            height: 100vh;
+
+            object-fit: cover;
+
+            display: block;
+
+            background: #000;
+        }
+    </style>
 </head>
 
 <body>
 
-<video
-    id="video"
-    autoplay
-    muted
-    loop
-    playsinline
-    controls>
-    
-   <source src="https://raw.githubusercontent.com/websiteku-id/Love/main/Mylove.mp4" type="video/mp4">
-    Browser kamu tidak mendukung video.
-</video>
+    <video
+        id="video"
+        autoplay
+        loop
+        playsinline
+        preload="auto">
 
-<script>
-const video = document.getElementById("video");
+        <source src="https://raw.githubusercontent.com/websiteku-id/Love/main/Mylove.mp4" type="video/mp4">
 
-// Coba mulai otomatis
-video.play().catch(() => {
-    console.log("Autoplay membutuhkan interaksi pengguna.");
-});
-</script>
+        Browser kamu tidak mendukung video.
+    </video>
+
+
+    <script>
+
+        const video = document.getElementById("video");
+
+        // Volume maksimal
+        video.volume = 1;
+
+        // Coba autoplay dengan suara
+        video.muted = false;
+
+        video.play().then(() => {
+
+            console.log("Video berhasil autoplay dengan suara.");
+
+        }).catch(() => {
+
+            console.log(
+                "Browser memblokir autoplay dengan suara."
+            );
+
+        });
+
+
+        // Pastikan video terus mengulang
+        video.addEventListener("ended", () => {
+
+            video.currentTime = 0;
+
+            video.play();
+
+        });
+
+
+        // Jika user menyentuh layar,
+        // coba aktifkan suara kembali
+        document.addEventListener("click", () => {
+
+            video.muted = false;
+            video.volume = 1;
+
+            video.play();
+
+        }, { once: true });
+
+
+        // Untuk HP yang mendukung fullscreen
+        function fullscreenVideo() {
+
+            if (video.requestFullscreen) {
+
+                video.requestFullscreen();
+
+            } else if (video.webkitRequestFullscreen) {
+
+                video.webkitRequestFullscreen();
+
+            }
+
+        }
+
+    </script>
 
 </body>
 </html>
